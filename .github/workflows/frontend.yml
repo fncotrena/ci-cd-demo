@@ -19,17 +19,13 @@ jobs:
           node-version: '20'
 
       - name: Instalar dependencias
-        working-directory: ./app
         run: npm ci
 
       - name: ESLint
-        working-directory: ./app
         run: npm run lint
 
       - name: Build
-        working-directory: ./app
         run: npm run build -- --configuration production
 
       - name: Tests
-        working-directory: ./app
         run: npm run test
