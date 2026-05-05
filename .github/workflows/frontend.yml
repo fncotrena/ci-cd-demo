@@ -1,15 +1,35 @@
-- name: Instalar dependencias
-  working-directory: ./app
-  run: npm ci
+name: Frontend CI
 
-- name: ESLint
-  working-directory: ./app
-  run: npm run lint
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
 
-- name: Build
-  working-directory: ./app
-  run: npm run build -- --configuration production
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
 
-- name: Tests
-  working-directory: ./app
-  run: npm run test
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Instalar dependencias
+        working-directory: ./app
+        run: npm ci
+
+      - name: ESLint
+        working-directory: ./app
+        run: npm run lint
+
+      - name: Build
+        working-directory: ./app
+        run: npm run build -- --configuration production
+
+      - name: Tests
+        working-directory: ./app
+        run: npm run test
